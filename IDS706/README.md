@@ -1,3 +1,5 @@
+[![Python Template for IDS706](https://github.com/JayWu0512/duke-mids-courses/actions/workflows/ids706-ci.yml/badge.svg)](https://github.com/JayWu0512/duke-mids-courses/actions/workflows/ids706-ci.yml)
+
 # Duke IDS 706 – Data Engineering Systems
 
 This repository contains coursework, projects, and experiments for **IDS 706: Data Engineering Systems**, a core course in the Duke Master in Interdisciplinary Data Science (MIDS) program.
