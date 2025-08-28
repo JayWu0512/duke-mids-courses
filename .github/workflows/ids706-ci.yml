@@ -1,0 +1,40 @@
+name: Python Template for IDS706
+
+on:
+  push:
+    paths:
+      - 'IDS706/**'
+      - '.github/workflows/ids706-ci.yml'
+  pull_request:
+    paths:
+      - 'IDS706/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: IDS706
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint with flake8
+        run: |
+          flake8 .
+
+      - name: Run tests
+        run: |
+          pytest -vv --cov=hello
