@@ -13,3 +13,5 @@ The course provides a **hands-on introduction to modern data engineering practic
 - Data engineering for machine learning and analytics
 
 The goal of this repo is to **document learning, share reproducible code, and track progress** throughout the course, while building practical skills in managing, transforming, and deploying data systems at scale.
+
+
