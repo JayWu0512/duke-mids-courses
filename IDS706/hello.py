@@ -1,5 +1,5 @@
 def say_hello(name: str) -> str:
-    ## basic function to return a greeting message
+    # basic function to return a greeting message
     """Return a greeting message to students in the IDS class."""
     return f"Hello, {name}, welcome to Data Engineering Systems (IDS 706)!"
 
