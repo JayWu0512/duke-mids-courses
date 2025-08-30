@@ -50,3 +50,5 @@ make clean
 # Run everything (install → format → lint → test)
 make all
 ```
+
+Note: The GitHub Actions CI workflow (ids706-ci.yml) is configured to run inside the duke-mids-courses directory, ensuring that all commands (install, lint, test, etc.) are executed relative to this repository’s root.
