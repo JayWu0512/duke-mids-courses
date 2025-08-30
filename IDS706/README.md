@@ -14,6 +14,16 @@ The course provides a **hands-on introduction to modern data engineering practic
 
 The goal of this repo is to **document learning, share reproducible code, and track progress** throughout the course, while building practical skills in managing, transforming, and deploying data systems at scale.
 
+## Setup Instructions
 
+To get started, clone this repository and set up your environment:
+
+```bash
+# Clone the repository
+git clone https://github.com/JayWu0512/duke-mids-courses.git
+cd duke-mids-courses
+
+# Install dependencies
+make install
 
 
