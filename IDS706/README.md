@@ -26,4 +26,26 @@ cd duke-mids-courses
 # Install dependencies
 make install
 
+## Usage Examples
+
+Use the provided **Makefile** to manage common tasks:
+
+```bash
+# Install dependencies
+make install
+
+# Format code with black
+make format
+
+# Lint code with flake8
+make lint
+
+# Run tests with pytest + coverage
+make test
+
+# Clean cache and temporary files
+make clean
+
+# Run everything (install → format → lint → test)
+make all
 
