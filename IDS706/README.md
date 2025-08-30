@@ -25,6 +25,8 @@ cd duke-mids-courses
 
 # Install dependencies
 make install
+```bash
+
 
 ## Usage Examples
 
@@ -48,4 +50,4 @@ make clean
 
 # Run everything (install → format → lint → test)
 make all
-
+```bash
