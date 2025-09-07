@@ -1,5 +1,5 @@
 import random
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 ALPHA = 0.4
 
@@ -9,8 +9,8 @@ def finish_sentence(sentence, n, corpus, randomize=False):
     # edge cases
     if n < 1:
         raise ValueError("n should larger than 0")
-    if len(sentence) < n:
-        raise ValueError("Setence length should be larger than n")
+    # if len(sentence) < n:
+    #     raise ValueError("Setence length should be larger than n")
 
     # build n-gram model
     n_grams = build_n_gram_model(corpus, n)
@@ -23,13 +23,14 @@ def finish_sentence(sentence, n, corpus, randomize=False):
 
 def build_n_gram_model(corpus, n):
     # build n-gram model
-    n_grams = defaultdict(list)
-    #  n=3 -> ("I", "love"): ["data", "python", "nlp"]
-    for i in range(len(corpus) - n):
-        key = tuple(corpus[i : i + n - 1])
-        next_word = corpus[i + n - 1]
-        n_grams[key].append(next_word)
-    return n_grams
+    model = defaultdict(list)
+    model[()].extend(corpus)
+    for k in range(1, n):
+        for i in range(len(corpus) - k):
+            key = tuple(corpus[i : i + k])
+            next_word = corpus[i + k]
+            model[key].append(next_word)
+    return model
 
 
 def predict(n_grams, sentence, n, randomize):
@@ -40,7 +41,7 @@ def predict(n_grams, sentence, n, randomize):
         next_words = n_grams[current_key]
 
         if randomize == True:
-            next_word = random.choices(next_words)
+            next_word = random.choice(next_words)
         else:
             next_word = next_words[0]
         sentence.append(next_word)
