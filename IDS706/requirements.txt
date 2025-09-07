@@ -6,4 +6,5 @@ black
 pytest-cov
 kagglehub
 polars
-
+typer
+app

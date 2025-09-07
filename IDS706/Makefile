@@ -2,6 +2,10 @@ install:
 	 pip install --upgrade pip &&\
 	 pip install -r requirements.txt
 
+.PHONY: build
+build:
+	python -m src.app.cli
+
 format:
 	 black *.py
 
