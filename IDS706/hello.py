@@ -5,7 +5,7 @@ def say_hello(name: str) -> str:
 
 
 def add(a: int, b: int) -> int:
-    # function to add two numbers 
+    # function to add two numbers
     """Return the sum of two numbers."""
     return a + b
 
