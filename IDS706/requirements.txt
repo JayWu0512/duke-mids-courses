@@ -4,3 +4,6 @@ pytest
 click
 black
 pytest-cov
+kagglehub
+polars
+
