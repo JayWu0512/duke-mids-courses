@@ -19,6 +19,9 @@ def finish_sentence(sentence, n, corpus, randomize=False):
     # if len(sentence) < n:
     #     raise ValueError("Setence length should be larger than n")
 
+    # clean the cache before predict
+    _counts_cache.clear()
+
     # build n-gram model
     n_grams = build_n_gram_model(corpus, n)
 
