@@ -1,3 +1,5 @@
+[![Python Template for IDS706](https://github.com/JayWu0512/duke-mids-courses/actions/workflows/ids706-ci.yml/badge.svg)](https://github.com/JayWu0512/duke-mids-courses/actions/workflows/ids706-ci.yml)
+
 # LinkedIn Jobs & Skills Analysis
 
 This project analyzes LinkedIn job postings and skills data using a structured data pipeline (Polars) and machine learning exploration (KMeans clustering).
