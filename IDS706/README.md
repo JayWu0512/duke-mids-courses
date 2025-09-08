@@ -97,7 +97,3 @@ pip install -r requirements.txt
 Key packages: `polars`, `typer`, `scikit-learn`, `matplotlib`, `pandas`, `pyarrow`.
 
 ---
-
-✅ End-to-end reproducible pipeline  
-✅ Modular OOP structure (infra/domain/app)  
-✅ Jupyter notebooks for inspection, grouping, and ML exploration  

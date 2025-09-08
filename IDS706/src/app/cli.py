@@ -8,7 +8,7 @@ app = typer.Typer()
 def build():
     """Build pipeline."""
     JobsPipeline().build()
-    typer.echo("✅ build done.")
+    typer.echo("build done.")
 
 
 if __name__ == "__main__":

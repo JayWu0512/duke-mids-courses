@@ -62,6 +62,6 @@ class JobsPipeline:
         self.repo.save_lazy(lf_top, str(TOP_SKILLS_PATH))
 
         # Optional: small console hints (no heavy collect)
-        print(f"✅ Bronze written: {BRONZE_PATH}")
-        print(f"✅ Silver written: {SILVER_PATH}")
-        print(f"✅ Top skills written: {TOP_SKILLS_PATH}")
+        print(f"Bronze written: {BRONZE_PATH}")
+        print(f"Silver written: {SILVER_PATH}")
+        print(f"Top skills written: {TOP_SKILLS_PATH}")
