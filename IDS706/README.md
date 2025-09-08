@@ -1,54 +1,101 @@
-[![Python Template for IDS706](https://github.com/JayWu0512/duke-mids-courses/actions/workflows/ids706-ci.yml/badge.svg)](https://github.com/JayWu0512/duke-mids-courses/actions/workflows/ids706-ci.yml)
+# LinkedIn Jobs & Skills Analysis
 
-# Duke IDS 706 – Data Engineering Systems
+This project analyzes LinkedIn job postings and skills data using a structured data pipeline (Polars) and machine learning exploration (KMeans clustering).
 
-This repository contains coursework, projects, and experiments for **IDS 706: Data Engineering Systems**, a core course in the Duke Master in Interdisciplinary Data Science (MIDS) program.
+## Project Structure
 
-The course provides a **hands-on introduction to modern data engineering practices**, covering topics such as:
+```
+data/
+├── raw/                 # Original Kaggle parquet files
+│   ├── job_skills.parquet
+│   ├── job_summary.parquet
+│   └── linkedin_job_postings.parquet
+├── bronze/              # Cleaned + normalized
+│   └── jobs.parquet
+├── silver/              # Role-filtered + text-joined
+│   └── jobs_text.parquet
+└── gold/                # Aggregated skills & final outputs
+    └── top_skills.parquet
 
-- Data modeling and pipelines
-- SQL and relational databases
-- Cloud-based data platforms
-- Distributed systems and big data frameworks
-- Data engineering for machine learning and analytics
+notebooks/
+├── 01_eda.ipynb         # Data inspection & visualization
+└── 02_kmeans.ipynb      # ML exploration (TF-IDF + clustering)
 
-The goal of this repo is to **document learning, share reproducible code, and track progress** throughout the course, while building practical skills in managing, transforming, and deploying data systems at scale.
+scripts/
+└── download_kaggle.py   # Kaggle download & parquet conversion
 
-## Setup Instructions
+src/
+├── app/                 # Pipeline orchestration (Typer CLI)
+│   ├── cli.py
+│   └── pipeline.py
+├── infra/               # IO adapters, transformers, aggregators
+│   ├── aggregators.py
+│   ├── io_polars.py
+│   └── transformers.py
+├── domain/              # Ports/abstractions
+│   └── ports.py
+└── utils/               # Helpers & config
+    └── settings.py
 
-To get started, clone this repository and set up your environment:
+Makefile                 # Common commands (build/install)
+requirements.txt         # Dependencies
+README.md                # Project documentation
+```
+
+## Pipeline
+
+The pipeline builds multiple layers of data:
+
+1. **Raw** → Original Kaggle parquet files.
+2. **Bronze** → Cleaned and normalized schema.
+3. **Silver** → Role-filtered, text-joined job postings.
+4. **Gold** → Aggregated top skills.
+
+Run with:
 
 ```bash
-# Clone the repository
-git clone https://github.com/JayWu0512/duke-mids-courses.git
-cd duke-mids-courses
+make build
+```
 
-# Install dependencies
+Outputs will be written into `data/bronze/`, `data/silver/`, and `data/gold/`.
+
+## Notebooks
+
+- **01_eda.ipynb**:  
+  Data inspection, null analysis, column distributions, posting trends.  
+  Example: work type breakdown (onsite, hybrid, remote).
+
+- **02_kmeans.ipynb**:  
+  Machine learning exploration with TF-IDF + KMeans clustering.  
+  Includes elbow method to choose K and visualization of top TF-IDF terms per cluster.
+
+## Insights
+
+- Many job postings are missing work type and seniority information → imputation and text-based derivation improves coverage.
+- Distribution: majority of postings are "onsite", but remote/hybrid roles exist in smaller proportions.
+- KMeans clustering (TF-IDF on job text) reveals meaningful groupings:  
+  - **Cluster 0**: software / embedded software roles.  
+  - Other clusters capture data-focused roles (data scientist, analyst, engineer).  
+- The elbow method suggested **K ≈ 6** as a reasonable trade-off for cluster coherence.
+
+## Requirements
+
+Install dependencies:
+
+```bash
 make install
 ```
 
-## Usage Examples
-
-Use the provided **Makefile** to manage common tasks:
+Or manually:
 
 ```bash
-# Install dependencies
-make install
-
-# Format code with black
-make format
-
-# Lint code with flake8
-make lint
-
-# Run tests with pytest + coverage
-make test
-
-# Clean cache and temporary files
-make clean
-
-# Run everything (install → format → lint → test)
-make all
+pip install -r requirements.txt
 ```
 
-Note: The GitHub Actions CI workflow (ids706-ci.yml) is configured to run inside the duke-mids-courses directory, ensuring that all commands (install, lint, test, etc.) are executed relative to this repository’s root.
+Key packages: `polars`, `typer`, `scikit-learn`, `matplotlib`, `pandas`, `pyarrow`.
+
+---
+
+✅ End-to-end reproducible pipeline  
+✅ Modular OOP structure (infra/domain/app)  
+✅ Jupyter notebooks for inspection, grouping, and ML exploration  
