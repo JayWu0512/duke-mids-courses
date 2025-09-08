@@ -17,6 +17,8 @@ from ..infra.transformers import (
     CleanJobTransformer,
     RoleFilterTransformer,
     TextJoinTransformer,
+    DeriveWorkTypeTransformer,
+    DeriveSeniorityTransformer,
 )
 from ..infra.aggregators import TopSkillsAggregator
 
@@ -30,6 +32,8 @@ class JobsPipeline:
         self.role_filter = RoleFilterTransformer(TARGET_ROLES)
         self.texter = TextJoinTransformer()
         self.topskills = TopSkillsAggregator(topk=40)
+        self.worktype = DeriveWorkTypeTransformer()
+        self.seniority = DeriveSeniorityTransformer()
 
     def build(self) -> None:
         """Run the end-to-end table build with whatever is in data/raw."""
@@ -49,6 +53,8 @@ class JobsPipeline:
         # 3) Role filter + text join -> silver
         lf_silver = self.role_filter.run(lf_bronze)
         lf_silver = self.texter.run(lf_silver)
+        lf_silver = self.worktype.run(lf_silver)
+        lf_silver = self.seniority.run(lf_silver)
         self.repo.save_lazy(lf_silver, str(SILVER_PATH))
 
         # 4) Top skills aggregate -> gold

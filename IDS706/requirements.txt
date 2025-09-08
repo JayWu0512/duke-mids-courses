@@ -7,4 +7,7 @@ pytest-cov
 kagglehub
 polars
 typer
-app
+pandas
+matplotlib
+pyarrow==17.0.0
+scikit-learn
