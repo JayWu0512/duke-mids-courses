@@ -44,6 +44,12 @@ requirements.txt         # Dependencies
 README.md                # Project documentation
 ```
 
+
+## Data Source
+- Job postings dataset (CSV/Parquet) with fields including **title, company, location, work_type, seniority, and listed skills**.
+- Dataset is filtered to a manageable slice for computation in the notebooks.
+
+
 ## Pipeline
 
 The pipeline builds multiple layers of data:
@@ -70,6 +76,32 @@ Outputs will be written into `data/bronze/`, `data/silver/`, and `data/gold/`.
 - **02_kmeans.ipynb**:  
   Machine learning exploration with TF-IDF + KMeans clustering.  
   Includes elbow method to choose K and visualization of top TF-IDF terms per cluster.
+
+## Analysis Steps
+
+### 1. Exploratory Data Analysis (`01_eda.ipynb`)
+- **Health checks** on missing values and duplicates.  
+- **Distributions** of roles, work types, and seniority levels.  
+- **Top locations & companies** by posting frequency.  
+- **Time series analysis**: posting trend by month.  
+- **Skills analysis**:  
+  - Top skills overall  
+  - Top skills by role  
+  - Co-occurrence network of skills  
+
+### 2. KMeans Clustering (`02_kmeans.ipynb`)
+- Feature engineering: transforming skills & job features into vectors.  
+- Running **KMeans clustering** to group similar jobs.  
+- Evaluating clusters using **silhouette score**.  
+- Visualizing clusters to interpret relationships among job postings.
+
+## Visualization
+- Bar charts for top skills, roles, and companies.  
+- Line charts for posting trends over time.  
+- Scatter plots of clusters in reduced dimensions.  
+- Skill co-occurrence diagrams.
+
+All plots include **axis labels and titles** for clarity.
 
 ## Insights
 
