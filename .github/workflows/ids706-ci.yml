@@ -34,7 +34,15 @@ jobs:
       # - name: Lint with flake8
       #   run: |
       #     flake8 src tests scripts
+      - name: Build tiny test data
+        run: |
+          TINY_N_PER_GROUP=2 TINY_MAX_ROWS=2000 TINY_GEN_TOP_SKILLS=0 python scripts/make_test_data.py
 
       - name: Run tests
         run: |
           pytest -vv --cov=src --cov-report=term-missing
+
+      - name: Cleanup test data
+        if: always()
+        run: |
+          rm -rf data/test
