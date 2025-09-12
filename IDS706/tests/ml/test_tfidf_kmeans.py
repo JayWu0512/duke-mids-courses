@@ -1,11 +1,10 @@
-# English comments only below.
+from sklearn.cluster import KMeans
+from sklearn.feature_extraction.text import TfidfVectorizer
 import pytest
 from pathlib import Path
 import polars as pl
 
 sklearn = pytest.importorskip("sklearn")
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.cluster import KMeans
 
 TEST_DIR = Path("data/test")
 

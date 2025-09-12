@@ -19,7 +19,8 @@ def test_role_filter_matches_selected_roles():
     lf = _lazy_from_tiny_jobs()
     roles = ["data scientist", "data engineer", "machine learning", "analyst"]
     out = RoleFilterTransformer(roles=roles).run(lf).collect()
-    # Should keep some rows (if none, the sample didn't contain target roles; still assert not crashing)
+    # Should keep some rows
+    # if none, the sample didn't contain target roles; still assert not crashing
     assert out.height >= 0  # existence test; no crash
 
 

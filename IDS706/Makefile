@@ -13,10 +13,16 @@ format:
 lint:
 	flake8 src tests scripts
 
+# for local
 test:
 	pytest -vv --cov=src --cov-report=term-missing tests
 
-clean:
-	rm -rf __pycache__ .pytest_cache .coverage htmlcov
+# for ci/cd
+test-ci:
+	pytest -q --cov=src --cov-report=term-missing tests
 
-all: install format lint test
+clean:
+	find . -type d -name "__pycache__" -exec rm -rf {} +
+	rm -rf .pytest_cache .coverage htmlcov
+
+all: install format lint test clean

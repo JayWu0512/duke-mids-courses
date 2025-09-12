@@ -1,6 +1,6 @@
 # src/infra/io_polars.py
 import polars as pl
-from typing import List, Sequence
+from typing import List
 from ..domain.ports import DatasetRepository
 
 
