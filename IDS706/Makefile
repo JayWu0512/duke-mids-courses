@@ -1,21 +1,22 @@
-install:
-	 pip install --upgrade pip &&\
-	 pip install -r requirements.txt
+.PHONY: install build format lint test clean all
 
-.PHONY: build
+install:
+	pip install --upgrade pip && \
+	pip install -r requirements.txt
+
 build:
 	python -m src.app.cli
 
 format:
-	 black *.py
+	black src tests scripts
 
 lint:
-	 flake8 hello.py
+	flake8 src tests scripts
 
 test:
-	 python -m pytest -vv --cov=hello test_hello.py
+	pytest -vv --cov=src --cov-report=term-missing tests
 
 clean:
-	 rm -rf __pycache__ .pytest_cache .coverage
+	rm -rf __pycache__ .pytest_cache .coverage htmlcov
 
 all: install format lint test
