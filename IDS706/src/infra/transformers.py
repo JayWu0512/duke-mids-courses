@@ -22,7 +22,6 @@ class CleanJobTransformer(Transformer):
         title_candidates = ["job_title", "title", "position"]
         company_candidates = ["company", "company_name", "employer"]
         location_candidates = ["location", "job_location", "city"]
-        # ← 加了 Kaggle 常見欄位
         posted_candidates = [
             "posted_time",
             "posted_at",
@@ -47,7 +46,7 @@ class CleanJobTransformer(Transformer):
 
         out = (
             lf
-            # 1) 先把「來源欄位 → 標準欄位」映射好
+            # 1) candidate column -> standard column
             .with_columns(
                 [
                     first_present(title_candidates).cast(pl.Utf8).alias("title"),
@@ -64,7 +63,7 @@ class CleanJobTransformer(Transformer):
                     first_present(skills_candidates).cast(pl.Utf8).alias("skills_raw"),
                 ]
             )
-            # 2) 立刻建立 title_lc 與 posted_at（避免後面 select 找不到）
+            # 2) add title_lc and posted_at
             .with_columns(
                 [
                     pl.when(pl.col("title").is_not_null())
@@ -73,11 +72,11 @@ class CleanJobTransformer(Transformer):
                     .alias("title_lc"),
                     pl.coalesce(
                         [
-                            # 含時區的字串先用 UTC 解析，再移除時區
+                            # use UTC to parse first, and then remove timezone
                             pl.col("posted_raw")
                             .str.strptime(pl.Datetime(time_zone="UTC"), strict=False)
                             .dt.replace_time_zone(None),
-                            # 再嘗試一般無時區字串
+                            # try to parse no timezome string
                             pl.col("posted_raw").str.strptime(
                                 pl.Datetime, strict=False
                             ),
@@ -85,9 +84,9 @@ class CleanJobTransformer(Transformer):
                     ).alias("posted_at"),
                 ]
             )
-            # 3) 基本過濾
+            # 3) basic filter
             .filter(pl.col("title").is_not_null() & pl.col("company").is_not_null())
-            # 4) skills 正規化（JSON list 或逗號分隔）
+            # 4) skills regularization
             .with_columns(
                 [
                     pl.when(pl.col("skills_raw").is_not_null())
@@ -103,7 +102,7 @@ class CleanJobTransformer(Transformer):
                     .alias("skills_list")
                 ]
             )
-            # 5) 最終投影
+            # 5) final
             .select(
                 [
                     "title",
